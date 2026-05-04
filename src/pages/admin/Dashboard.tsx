@@ -22,7 +22,7 @@ export default function AdminDashboard() {
   const [isCreatingCustomer, setIsCreatingCustomer] = useState(false);
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const [newCustomer, setNewCustomer] = useState({ name: "", email: "", phone: "", address: "" });
-  const [newOrder, setNewOrder] = useState({ customerId: "", service: "Wash & Fold", weight: "", total: "" });
+  const [newOrder, setNewOrder] = useState({ customerId: "", service: "Wash & Fold", weight: "", total: "", paymentMethod: "cash" });
   const [orders, setOrders] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>({});
@@ -129,6 +129,7 @@ export default function AdminDashboard() {
         service: newOrder.service,
         weight: Number(newOrder.weight),
         total: Number(newOrder.total),
+        paymentMethod: newOrder.paymentMethod,
       }),
     })
       .then((res) => res.json())
@@ -139,7 +140,7 @@ export default function AdminDashboard() {
           .then((ordersData) => {
             setOrders(ordersData);
             setIsCreatingOrder(false);
-            setNewOrder({ customerId: "", service: "Wash & Fold", weight: "", total: "" });
+            setNewOrder({ customerId: "", service: "Wash & Fold", weight: "", total: "", paymentMethod: "cash" });
             toast.success("Order created successfully!");
           });
       })
@@ -879,6 +880,20 @@ export default function AdminDashboard() {
                       className="w-full bg-[#0a1128] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
                     />
                   </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-blue-300 mb-1">Payment Method</label>
+                  <select
+                    required
+                    value={newOrder.paymentMethod}
+                    onChange={(e) => setNewOrder({ ...newOrder, paymentMethod: e.target.value })}
+                    className="w-full bg-[#0a1128] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="cash">Cash</option>
+                    <option value="gcash">GCash</option>
+                    <option value="maya">Maya</option>
+                    <option value="card">Credit/Debit Card</option>
+                  </select>
                 </div>
                 <div className="pt-4">
                   <button

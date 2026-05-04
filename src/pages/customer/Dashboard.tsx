@@ -283,9 +283,14 @@ export default function CustomerDashboard() {
                     </div>
 
                     <div className="space-y-4 mb-8 text-sm tracking-widest text-slate-400 flex-grow">
-                      <div className="flex items-center gap-4">
-                        <Package className="h-4 w-4" strokeWidth={1.5} />
-                        {order.weight} kg/qty
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <Package className="h-4 w-4" strokeWidth={1.5} />
+                          {order.weight} kg/qty
+                        </div>
+                        <span className="text-[10px] uppercase tracking-[0.2em] px-2 py-1 bg-white/5 border border-white/10 rounded">
+                          {order.paymentMethod || 'cash'}
+                        </span>
                       </div>
                       <div className="flex items-center gap-4">
                         <Clock className="h-4 w-4" strokeWidth={1.5} />

@@ -319,8 +319,8 @@ export default function BookLaundry() {
                       }`}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-xl bg-blue-500/20">
-                          <div className="h-6 w-6 bg-blue-500 rounded-full" />
+                        <div className="p-3 rounded-xl bg-blue-500/20 text-blue-400 font-bold text-xl">
+                          G
                         </div>
                         <span className="font-serif font-bold text-white text-lg">
                           GCash
@@ -336,7 +336,108 @@ export default function BookLaundry() {
                         <CheckCircle2 className="h-4 w-4" />
                       </div>
                     </button>
+                    <button
+                      onClick={() => setPayment("maya")}
+                      className={`flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 ${
+                        payment === "maya"
+                          ? "border-blue-500 bg-blue-500/10 shadow-md shadow-blue-500/10"
+                          : "border-blue-900/30 hover:border-blue-500/50 hover:bg-blue-900/20"
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 font-bold text-xl">
+                          M
+                        </div>
+                        <span className="font-serif font-bold text-white text-lg">
+                          Maya
+                        </span>
+                      </div>
+                      <div
+                        className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          payment === "maya"
+                            ? "border-blue-500 bg-blue-500 text-white"
+                            : "border-blue-900/50 text-transparent"
+                        }`}
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => setPayment("card")}
+                      className={`flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 ${
+                        payment === "card"
+                          ? "border-blue-500 bg-blue-500/10 shadow-md shadow-blue-500/10"
+                          : "border-blue-900/30 hover:border-blue-500/50 hover:bg-blue-900/20"
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`p-3 rounded-xl ${payment === "card" ? "bg-blue-500/20 text-blue-400" : "bg-[#0a1128] text-blue-300"}`}
+                        >
+                          <CreditCard className="h-6 w-6" />
+                        </div>
+                        <span className="font-serif font-bold text-white text-lg">
+                          Credit / Debit Card
+                        </span>
+                      </div>
+                      <div
+                        className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          payment === "card"
+                            ? "border-blue-500 bg-blue-500 text-white"
+                            : "border-blue-900/50 text-transparent"
+                        }`}
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                    </button>
                   </div>
+
+                  {payment === "card" && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="bg-[#0a1128]/50 p-6 rounded-2xl border border-blue-900/30 mb-10 space-y-4"
+                    >
+                      <h4 className="font-serif font-bold text-white mb-4 text-lg">
+                        Card Details
+                      </h4>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-1">Card Number</label>
+                        <input
+                          type="text"
+                          placeholder="0000 0000 0000 0000"
+                          className="w-full bg-[#0f172a] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-1">Expiry Date</label>
+                          <input
+                            type="text"
+                            placeholder="MM/YY"
+                            className="w-full bg-[#0f172a] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-300 mb-1">CVC</label>
+                          <input
+                            type="text"
+                            placeholder="123"
+                            className="w-full bg-[#0f172a] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-1">Cardholder Name</label>
+                        <input
+                          type="text"
+                          placeholder="Juan Dela Cruz"
+                          className="w-full bg-[#0f172a] border border-blue-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                        />
+                      </div>
+                    </motion.div>
+                  )}
 
                   <div className="bg-[#0a1128]/50 p-8 rounded-2xl border border-blue-900/30 mb-10">
                     <h4 className="font-serif font-bold text-white mb-6 text-lg">

@@ -24,12 +24,15 @@ export default function StaffDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [isCreatingWalkIn, setIsCreatingWalkIn] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [simulatedOrderId, setSimulatedOrderId] = useState("");
   const [walkInForm, setWalkInForm] = useState({
     name: "",
     phone: "",
     service: "Wash & Fold",
     weight: "",
     total: "",
+    paymentMethod: "cash",
   });
   const navigate = useNavigate();
 
@@ -84,6 +87,7 @@ export default function StaffDashboard() {
           service: walkInForm.service,
           weight: Number(walkInForm.weight),
           total: Number(walkInForm.total),
+          paymentMethod: walkInForm.paymentMethod,
         }),
       });
 
@@ -91,7 +95,7 @@ export default function StaffDashboard() {
 
       toast.success("Walk-in order created successfully!");
       setIsCreatingWalkIn(false);
-      setWalkInForm({ name: "", phone: "", service: "Wash & Fold", weight: "", total: "" });
+      setWalkInForm({ name: "", phone: "", service: "Wash & Fold", weight: "", total: "", paymentMethod: "cash" });
       
       // Refetch orders
       fetch("/api/orders?role=staff")
@@ -171,7 +175,7 @@ export default function StaffDashboard() {
           </div>
           <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
             <button
-              onClick={() => toast.info("QR Scanner coming soon!")}
+              onClick={() => setIsScannerOpen(true)}
               className="flex items-center gap-2 bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors border border-indigo-500/30"
             >
               <QrCode className="h-4 w-4" /> Scan QR
@@ -275,9 +279,14 @@ export default function StaffDashboard() {
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-white/10 space-y-3">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    Customer Details
-                  </p>
+                  <div className="flex justify-between items-center mb-2">
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                      Customer Details
+                    </p>
+                    <span className="text-xs font-bold text-indigo-300 uppercase tracking-wider bg-indigo-500/10 px-2 py-1 rounded">
+                      {order.paymentMethod || 'cash'}
+                    </span>
+                  </div>
                   <p className="text-white font-bold">{order.customerName}</p>
                   <div className="flex items-start gap-3 text-slate-400 text-sm">
                     <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
@@ -412,6 +421,20 @@ export default function StaffDashboard() {
                   />
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1">Payment Method</label>
+                <select
+                  required
+                  value={walkInForm.paymentMethod}
+                  onChange={(e) => setWalkInForm({ ...walkInForm, paymentMethod: e.target.value })}
+                  className="w-full bg-[#0a1128] border border-indigo-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500"
+                >
+                  <option value="cash">Cash</option>
+                  <option value="gcash">GCash</option>
+                  <option value="maya">Maya</option>
+                  <option value="card">Credit/Debit Card</option>
+                </select>
+              </div>
               <div className="pt-4">
                 <button
                   type="submit"
@@ -421,6 +444,75 @@ export default function StaffDashboard() {
                 </button>
               </div>
             </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Mock QR Scanner Modal */}
+      {isScannerOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-[#0f172a] border border-indigo-900/50 rounded-3xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-playfair font-bold text-white flex items-center gap-2">
+                <QrCode className="h-6 w-6 text-indigo-400" /> Scan QR Code
+              </h3>
+              <button
+                onClick={() => setIsScannerOpen(false)}
+                className="text-indigo-400 hover:text-white transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Fake Camera View */}
+            <div className="relative w-full aspect-square bg-black rounded-2xl border-2 border-indigo-500/30 overflow-hidden mb-6 flex items-center justify-center">
+              <p className="text-slate-500 text-sm z-10 font-medium tracking-widest uppercase">Camera Active...</p>
+              {/* Scanning Laser */}
+              <motion.div
+                animate={{ top: ["0%", "100%", "0%"] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                className="absolute left-0 right-0 h-0.5 bg-green-500 shadow-[0_0_15px_rgba(34,197,94,1)] z-20"
+              />
+              {/* Corner markers */}
+              <div className="absolute top-6 left-6 w-12 h-12 border-t-4 border-l-4 border-indigo-500 rounded-tl-xl"></div>
+              <div className="absolute top-6 right-6 w-12 h-12 border-t-4 border-r-4 border-indigo-500 rounded-tr-xl"></div>
+              <div className="absolute bottom-6 left-6 w-12 h-12 border-b-4 border-l-4 border-indigo-500 rounded-bl-xl"></div>
+              <div className="absolute bottom-6 right-6 w-12 h-12 border-b-4 border-r-4 border-indigo-500 rounded-br-xl"></div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Simulate Scan (Enter Order ID)</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={simulatedOrderId}
+                    onChange={(e) => setSimulatedOrderId(e.target.value)}
+                    placeholder="e.g. 101"
+                    className="flex-1 bg-[#0a1128] border border-indigo-900/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500"
+                  />
+                  <button
+                    onClick={() => {
+                      if (simulatedOrderId) {
+                        setSearchQuery(simulatedOrderId);
+                        setIsScannerOpen(false);
+                        toast.success(`Scanned Order #${simulatedOrderId}`);
+                        setSimulatedOrderId("");
+                      } else {
+                        toast.error("Please enter an Order ID");
+                      }
+                    }}
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold transition-colors"
+                  >
+                    Scan
+                  </button>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       )}

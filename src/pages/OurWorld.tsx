@@ -77,11 +77,11 @@ export default function OurWorld() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-[#0f172a]/50 border border-white/10 p-12 rounded-3xl"
+            className="bg-[#0f172a]/50 border border-white/10 p-12 rounded-3xl flex flex-col"
           >
             <h3 className="text-2xl font-serif mb-4 text-teal-400">Our Mission</h3>
             <p className="text-slate-300 leading-relaxed">
-              To provide a seamless, tech-enabled laundry experience that prioritizes quality, convenience, and sustainability, allowing our customers to focus on what truly matters to them.
+              LabaLink Smart Laundry is committed to delivering premium, convenient, and affordable laundry services through the seamless integration of technology and people. We aim to provide an exceptional customer experience through our mobile application, skilled and courteous staff, and environmentally responsible operations that contribute to the well-being of the communities we serve.
             </p>
           </motion.div>
           <motion.div
@@ -89,16 +89,16 @@ export default function OurWorld() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-[#0f172a]/50 border border-white/10 p-12 rounded-3xl"
+            className="bg-[#0f172a]/50 border border-white/10 p-12 rounded-3xl flex flex-col"
           >
             <h3 className="text-2xl font-serif mb-4 text-teal-400">Our Vision</h3>
             <p className="text-slate-300 leading-relaxed">
-              To be the leading smart laundry network in Metro Manila, setting the standard for digital convenience and eco-responsible garment care in urban communities.
+              To be the leading technology-integrated laundry service provider in Manila, recognized for quality, convenience, and environmental responsibility, making clean clothes accessible to every Filipino household.
             </p>
           </motion.div>
         </div>
 
-        {/* What Makes Us Different */}
+        {/* Core Values */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -106,56 +106,55 @@ export default function OurWorld() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-light mb-4">The LabaLink Difference</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">More than just a laundromat. We are a technology company dedicated to garment care.</p>
+          <h2 className="text-3xl md:text-5xl font-light mb-4">Core Values</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">The principles that guide everything we do.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-center p-8"
-          >
-            <div className="w-16 h-16 mx-auto bg-teal-500/10 rounded-full flex items-center justify-center mb-6 text-teal-400">
-              <Smartphone className="w-8 h-8" strokeWidth={1.5} />
-            </div>
-            <h4 className="text-xl font-serif mb-3">Tech Integration</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Real-time order tracking, digital payments via GCash/Maya, and easy scheduling right from your smartphone.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center p-8"
-          >
-            <div className="w-16 h-16 mx-auto bg-teal-500/10 rounded-full flex items-center justify-center mb-6 text-teal-400">
-              <Heart className="w-8 h-8" strokeWidth={1.5} />
-            </div>
-            <h4 className="text-xl font-serif mb-3">Customer First</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Reliable service, transparent pricing, and a loyalty rewards program designed to give back to our community.
-            </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center p-8"
-          >
-            <div className="w-16 h-16 mx-auto bg-teal-500/10 rounded-full flex items-center justify-center mb-6 text-teal-400">
-              <Leaf className="w-8 h-8" strokeWidth={1.5} />
-            </div>
-            <h4 className="text-xl font-serif mb-3">Eco-Responsible</h4>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              We use high-efficiency machines and eco-friendly detergents to minimize our environmental footprint.
-            </p>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-32">
+          {[
+            {
+              title: "Customer First",
+              desc: "We place customer satisfaction at the heart of every decision and interaction.",
+              icon: <Heart className="w-8 h-8" strokeWidth={1.5} />
+            },
+            {
+              title: "Quality Excellence",
+              desc: "We maintain the highest standards of cleanliness and care for every garment entrusted to us.",
+              icon: <Search className="w-8 h-8" strokeWidth={1.5} />
+            },
+            {
+              title: "Innovation",
+              desc: "We continuously embrace and integrate technology to improve our services and operations.",
+              icon: <Smartphone className="w-8 h-8" strokeWidth={1.5} />
+            },
+            {
+              title: "Integrity",
+              desc: "We operate with transparency, honesty, and accountability in all business dealings.",
+              icon: <User className="w-8 h-8" strokeWidth={1.5} />
+            },
+            {
+              title: "Environmental Responsibility",
+              desc: "We adopt eco-friendly practices in our cleaning processes, water usage, and waste management.",
+              icon: <Leaf className="w-8 h-8" strokeWidth={1.5} />
+            }
+          ].map((value, i) => (
+            <motion.div
+              key={value.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
+              className="text-center p-6 bg-[#0f172a]/30 border border-white/5 rounded-2xl hover:border-teal-500/30 transition-colors"
+            >
+              <div className="w-16 h-16 mx-auto bg-teal-500/10 rounded-full flex items-center justify-center mb-6 text-teal-400">
+                {value.icon}
+              </div>
+              <h4 className="text-lg font-serif mb-3 text-white">{value.title}</h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                {value.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
 
       </main>

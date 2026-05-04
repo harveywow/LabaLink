@@ -16,7 +16,7 @@ export default function Home() {
       <nav className="relative z-10 w-full px-8 py-8 flex justify-between items-center">
         <div className="flex items-center gap-16">
           <div className="text-2xl font-serif tracking-widest text-white">
-            15<span className="text-sm align-top">YEARS</span> | LABALINK
+            LABALINK
           </div>
           <div className="hidden md:flex items-center gap-8 text-xs font-medium tracking-[0.2em] text-white uppercase">
             <Link to="/services" className="hover:text-slate-300 transition-colors">Services</Link>
